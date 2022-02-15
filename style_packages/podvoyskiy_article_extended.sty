@@ -1,0 +1,407 @@
+% Стилевой файл для оформления статей для жкрнала "Газовая промышленность"
+\RequirePackage[english,russian]{babel}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{amsmath, amsfonts, amssymb, latexsym}
+\RequirePackage[
+	left=2cm,
+	right=2cm,
+	top=2cm,
+	bottom=2cm
+		]{geometry}
+\RequirePackage{multicol}
+\RequirePackage{hyperref}
+\RequirePackage{shorttoc}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+%\RequirePackage[
+%    pdftex,
+%	unicode,
+%	colorlinks,
+%	linkcolor=blue,
+%	citecolor=red,
+%	bookmarksopen,
+%	pdfhighlight=/N
+%		]{hyperref}  % поддержка гиперссылок
+\RequirePackage{url}
+\RequirePackage[svgnames]{xcolor} % Required to specify font color
+\RequirePackage{graphicx}
+\RequirePackage{color}
+\RequirePackage{colortbl}  % настраивает цвет таблицы
+\RequirePackage{textcomp}
+\RequirePackage{algorithmic}
+% --------- MAC APPLE ---------
+\RequirePackage{menukeys}  % для спецсимволов mac
+\tikzset{tw@shadowedangularkeys@base/.style={%
+	tw@set@tikz@colors,
+	inner sep=0pt,
+	inner xsep=2pt,
+	text height=1.825ex,
+	text depth=0.7ex,
+	minimum width=1.5em,
+	font=\relsize{-1}\itshape,
+	general shadow={%
+	shadow xshift=.2ex, shadow yshift=-.15ex,
+	fill=\usemenucolor{c},
+		},
+	}
+}
+\renewmenumacro{\menu}[>]{angularmenus} % default: menus
+%\renewmenumacro{\directory}[>]{hyphenatepathswithfolder} % default: paths
+\renewmenumacro{\directory}[>]{paths} % default: paths, pathswithblackfolder
+\renewmenumacro{\keys}{shadowedangularkeys} % default: roundedkeys
+\changemenucolor{gray}{br}{named}{black}  % border
+%\changemenucolor{gray}{bg}{named}{deepblue}  % background
+%\changemenucolor{gray}{txt}{named}{blue}  % text
+% --------- MAC APPLE ---------
+% определяем пользовательские цвета
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0.1,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{commentcolor}{HTML}{E23E57}
+\definecolor{remarkcolor}{HTML}{3F72AF}
+%\definecolor{codepurple}{HTML}{C42043}
+%\definecolor{backcolor}{HTML}{F2F2F2}
+\definecolor{bookColor}{cmyk}{0,0,0,0.90}
+\definecolor{deeppurple}{named}{Purple}
+\RequirePackage{cmap}
+\RequirePackage{indentfirst} % отступ в первой строке абзаца
+\RequirePackage[labelsep=period, centerlast, small]{caption}  % для того чтобы заменить ":" на "." после слова "рис."; подписи рисунков центрируются и печатаются размером small
+\RequirePackage{setspace}  % задет межстроковый интревал
+%\singlespacing  % одинарный
+\onehalfspacing  % полуторный интервал
+%\doublespacing  % двойной
+
+\RequirePackage{datetime}
+\RequirePackage{makeidx}
+
+
+% -- Типографские настройки
+\def\@maketitle{%
+	%\begin{center}
+		%\begin{spacing}{0.85}
+		%	{\scriptsize\color{gray}{\slshape Документ подготовлен в системе компьютерной вёрстки} \LaTeX\ \url{https://www.latex-project.org/}
+		%	}
+		%\end{spacing}
+	%\end{center}\vspace*{-10mm}
+		\begin{flushright}
+			\footnotesize\itshape
+			Дата последней сборки документа:\\ \today\ в \currenttime
+		\end{flushright}
+
+	%\newpage
+	%\null
+	%\vskip 2em%
+	\begin{center}%
+		\let \footnote \thanks
+		\begin{spacing}{1.5}
+		{\Large\bfseries\@title}%
+		\end{spacing}
+		%\vskip 1.2em%
+                \vskip 1mm
+		{\normalsize
+			%\lineskip .5em%
+			\begin{tabular}[t]{l}%
+				\@author
+			\end{tabular}\par	
+		}%
+		%\vskip 1em%
+		%{\large \@date}%
+	\end{center}%
+	\par
+	\vskip 1.5em
+}
+\def\@seccntformat#1{\csname the#1\endcsname. } % точка после номера раздела 
+
+\def\@biblabel#1{#1.} % формат номеров в списке литературы 
+
+%\renewcommand{\tableofcontents}{\section*{\normalfont\Large\contentsname}\@starttoc{toc}}
+
+% Оформление разделов и подразделов документа
+%\renewcommand{\thesection}{\Roman{section}}
+%\renewcommand{\section}{\@startsection{section}{1}%
+% 	{\parindent}{3.5ex plus 1ex minus .2ex}%
+% 	{2.3ex plus.2ex}{\normalfont\large}}  %{2.3ex plus.2ex}{\normalfont\Large\S}}  % НЕ ЖИРНЫЙ!!!
+ 	
+%\renewcommand{\subsection}{\@startsection{subsection}{2}%
+% 	{\parindent}{3.5ex plus 1ex minus .2ex}%
+% 	{2.3ex plus.2ex}{\normalfont\large\itshape}}  % {2.3ex plus.2ex}{\normalfont\Large\S}}  % НЕ ЖИРНЫЙ!!!
+\renewcommand{\@listI}{%
+	\leftmargin=25pt
+	\rightmargin=0pt
+	\labelsep=5pt
+	\labelwidth=8pt
+	\itemindent=0pt
+	\listparindent=0pt
+	\topsep=2pt plus 2pt minus 4pt
+	\partopsep=2pt plus 1pt minus 1pt
+	\parsep=0pt plus 1pt
+	\itemsep=\parsep}  % определяет отступы и интервалы в перечнях
+\renewcommand{\labelitemi}{$\mathsurround=0pt \circ$}  % значек корня квадратного вместо точки
+
+%BEGIN--борьба с переносами в формулах
+\binoppenalty=10000  % запрещает все разрывы строк после знаков бинарных операций
+\relpenalty=10000  % запрещает все разрывы строк после знаков бинарных отношений
+%END--борьба с переносами в формулах
+\abovedisplayskip=0.7\abovedisplayskip  % вертикальные отбивки перед выключенной формулой
+\belowdisplayskip=1\belowdisplayskip  % вертикальные отбивки после выключенной формулой
+\abovedisplayshortskip=0.4\abovedisplayshortskip  % для случая, если формула и соседняя с ней строка текста коротки
+\belowdisplayshortskip=1\belowdisplayshortskip  % для случая, если формула и соседняя с ней строка текста коротки
+\righthyphenmin=2  % наименьшее количество букв, которое разрешается переносить на следующую строку
+\clubpenalty=10000  % определяет нежелательность разрыва страницы после первой строки абзаца
+\widowpenalty=10000  % определяет нежелательность разрыва страницы перед последней строкой абзаца
+%\renewcommand{\bfdefault}{b}  % чтобы жирный шрифт был менее широким
+\frenchspacing  % чтобы промежутки между словами и предложениями не отличались
+\raggedbottom  % разрешает делать короткие страницы
+% -- Типографские настройки
+
+% -------- КОЛОНТИТУЛЫ
+\RequirePackage{lipsum}% http://ctan.org/pkg/lipsum
+\RequirePackage{nccfancyhdr}
+\RequirePackage{lastpage}% http://ctan.org/pkg/lastpage
+\pagestyle{fancy}% Set default page style to fancy
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead{}% Remove all header contents
+\cfoot{\small Стр. \thepage\ из \pageref{LastPage}}% Page X of Y in the footer (centered)
+% -------- КОЛОНТИТУЛЫ
+
+% для оформления Замечаний
+% с настройками по умолчанию: \remark{текст замечания}
+% с настройками цвеиа: \remark[red]{текст замечания}
+\newcommand{\remark}[2][black]{% black - это значение по умолчанию
+	\noindent
+	\parbox{\textwidth}{%
+		\vspace*{7pt}\par
+		\color{#1}
+		\hrule\vspace*{2pt}\hrule\vspace*{5pt}
+		{\small\itshape Замечание}\par
+		{\parindent=7mm\small#2}\vspace*{5pt}
+		\hrule\vspace*{2pt}\hrule\vspace*{5pt}
+	}\par
+}
+
+\newcommand{\quinta}[1]{%
+    \noindent
+    \parbox{\textwidth}{%
+        \vspace*{7pt}\par
+        \hrule\vspace*{2pt}\hrule\vspace*{5pt}
+        {\small\itshape Обобщение по вопросу }\par
+        {\parindent=7mm\small#1}\vspace*{5pt}
+        \hrule\vspace*{2pt}\hrule\vspace*{5pt}
+    }\par
+}
+\RequirePackage{listings}  % для офрмления листингов программ (альтернатива, например, fancyvrb)
+\lstloadlanguages{
+    XML,
+    SQL,
+	Python,
+	Fortran,
+	command.com,
+	[LaTeX]TeX
+}  % поддерживаемые языки
+
+% локальные настройки подсветки синтаксиса IronPython Workbench
+\lstdefinestyle{ironpython}{%
+	language = Python,  % базовый язык
+	basicstyle = \fontsize{10pt}{10pt}\ttfamily,  % стиль отображения базовых элементов кода
+	keywords = {try, except, while, yield, or, else, elif, not, and, break, continue, global, 
+    nonlocal, lambda, with, True, False, def, from, import, return, pass, class,for,in,if,as, 
+    None, raise, apply, applymap},  % дополнительные ключевые слова
+	emph = {[2]EOFError, dir, getattr, setattr, eval, enumerate, repr, getattr,
+		map, filter, list, ord, 
+		open, write, exec, super, str, sum, compile, int, input, float, range, abs, print, bool, dict}, % встроенные функции Python
+	emphstyle = {[2]\color{deeppurple}}, % цвет встроенных функций Python emph = {[2] ..}
+	%identifierstyle=\color{},  % стиль для неключевых слов
+	keywordstyle = \color{deepblue},  % стиль ключевых слов
+	stringstyle = \itshape\color{deepgreen},  % стиль строк
+	emphstyle = \color{blue},  % цвет идентифиакторов, которые включены в группу emph = {} в листингах
+	commentstyle = \color{commentcolor}\itshape,  % коментарии зеленым цветом
+	morestring=[s]{'''}{'''},
+	morestring=[s]{"""}{"""}
+}
+
+\lstdefinestyle{bash}{%
+    language = bash,
+    basicstyle = \fontsize{10pt}{10pt}\ttfamily,
+    %keywordstyle = \color{deeppurple},
+    stringstyle = \color{deepgreen},
+    commentstyle = \color{commentcolor}\itshape
+}
+
+
+% локальные настройки подсветки синтаксиса cmd
+\lstdefinelanguage{cmd}{
+	language = command.com,
+	basicstyle = \small\ttfamily,
+	%commentstyle = \color{red}\itshape,
+	%keywords = {export,for,echo,cd,del,if,exist,else,exit,in,do},
+	%keywordstyle = \color{blue},
+	%keywordsprefix=\@, alsoletter=\@,
+%	literate ={%
+%		{=}{{ \textcolor{orange}{=} }}1  % =
+%		%{(}{{ \textcolor{red}{(} }}1  % (
+%		%{)}{{ \textcolor{red}{)} }}1  % )
+%		{[}{{ \textcolor{orange}{[} }}1  % [
+%		{]}{{ \textcolor{orange}{]} }}1  % ]
+%	}
+}
+
+
+\lstdefinestyle{sql}{
+    language = SQL,
+    %backgroundcolor=\color{backcolor},   
+    commentstyle=\itshape\color{commentcolor},
+    keywordstyle=\color{blue},
+    keywords = {recursive, with, union, all, select, from, group, by, where, as, in,
+                when, else, then, case, end, order, update, set, show, to, and, delete,
+                insert, into, returning},
+%   numberstyle=\footnotesize\color{codegray},
+    stringstyle=\itshape\color{deepgreen},
+%   basicstyle=\footnotesize,
+%   breakatwhitespace=false,         
+%   breaklines=true,                 
+%   captionpos=b,                    
+%   keepspaces=true,                 
+%   numbers=left,                    
+%   numbersep=-10pt,                  
+%   showspaces=false,                
+%   showstringspaces=false,
+%   showtabs=false,
+}
+
+% глобальные настройки подсветки синтаксиса
+\lstset{%
+	numberbychapter=true,  % нумерация листинга по номеру главы
+	basicstyle = \fontsize{10pt}{10pt}\ttfamily,  % стиль отображения базовых элементов кода 
+	keepspaces = true,  % чтобы не удалялись пробелы в комментариях
+	basewidth={5pt},  % управляет шириной букв <--- NB!
+	numbers=left,  % где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny\itshape\color{gray},  % размер шрифта для номеров строк
+	stepnumber=1,  % размер шага между двумя номерами строк
+	numbersep=5pt,  % как далеко отстоят номера строк от подсвечиваемого кода
+	backgroundcolor=\color{white}, % цвет фона подсветки - используем \RequirePackage{color}
+	showspaces=false,  % показывать или нет пробелы специальными отступами
+	showstringspaces=false,  % показывать или нет пробелы в строках
+	showtabs=false,  % показывать или нет табуляцию в строках
+	frame = tlBR,  % рисовать рамку вокруг кода
+    %framesep=8pt,  % межстроковый интервал
+    %xleftmargin=10pt,
+    %framexleftmargin=40pt,
+	rulesepcolor=\color{black},% создает эффект тени
+	tabsize=2,  % размер табуляции по умолчанию равен 2 пробелам
+	captionpos=t,  % позиция заголовка вверху [t] или внизу [b] 
+	breaklines=true,  % автоматически переносить строки (да\нет)
+	breakatwhitespace=false,  % переносить строки только если есть пробел
+	escapeinside={\%*}{*)},  % если нужно добавить комментарии в коде
+	morecomment=[l]{!},  % комментарии для APDL
+	% Для отображения русских букв в комментариях, строках и пр. http://blog.harrix.org/article/641
+	extendedchars=true,
+	literate={Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+	{~}{{\textasciitilde}}1
+	{а}{{\selectfont\char224}}1
+	{б}{{\selectfont\char225}}1
+	{в}{{\selectfont\char226}}1
+	{г}{{\selectfont\char227}}1
+	{д}{{\selectfont\char228}}1
+	{е}{{\selectfont\char229}}1
+	{ё}{{\"e}}1
+	{ж}{{\selectfont\char230}}1
+	{з}{{\selectfont\char231}}1
+	{и}{{\selectfont\char232}}1
+	{й}{{\selectfont\char233}}1
+	{к}{{\selectfont\char234}}1
+	{л}{{\selectfont\char235}}1
+	{м}{{\selectfont\char236}}1
+	{н}{{\selectfont\char237}}1
+	{о}{{\selectfont\char238}}1
+	{п}{{\selectfont\char239}}1
+	{р}{{\selectfont\char240}}1
+	{с}{{\selectfont\char241}}1
+	{т}{{\selectfont\char242}}1
+	{у}{{\selectfont\char243}}1
+	{ф}{{\selectfont\char244}}1
+	{х}{{\selectfont\char245}}1
+	{ц}{{\selectfont\char246}}1
+	{ч}{{\selectfont\char247}}1
+	{ш}{{\selectfont\char248}}1
+	{щ}{{\selectfont\char249}}1
+	{ъ}{{\selectfont\char250}}1
+	{ы}{{\selectfont\char251}}1
+	{ь}{{\selectfont\char252}}1
+	{э}{{\selectfont\char253}}1
+	{ю}{{\selectfont\char254}}1
+	{я}{{\selectfont\char255}}1
+	{А}{{\selectfont\char192}}1
+	{Б}{{\selectfont\char193}}1
+	{В}{{\selectfont\char194}}1
+	{Г}{{\selectfont\char195}}1
+	{Д}{{\selectfont\char196}}1
+	{Е}{{\selectfont\char197}}1
+	{Ё}{{\"E}}1
+	{Ж}{{\selectfont\char198}}1
+	{З}{{\selectfont\char199}}1
+	{И}{{\selectfont\char200}}1
+	{Й}{{\selectfont\char201}}1
+	{К}{{\selectfont\char202}}1
+	{Л}{{\selectfont\char203}}1
+	{М}{{\selectfont\char204}}1
+	{Н}{{\selectfont\char205}}1
+	{О}{{\selectfont\char206}}1
+	{П}{{\selectfont\char207}}1
+	{Р}{{\selectfont\char208}}1
+	{С}{{\selectfont\char209}}1
+	{Т}{{\selectfont\char210}}1
+	{У}{{\selectfont\char211}}1
+	{Ф}{{\selectfont\char212}}1
+	{Х}{{\selectfont\char213}}1
+	{Ц}{{\selectfont\char214}}1
+	{Ч}{{\selectfont\char215}}1
+	{Ш}{{\selectfont\char216}}1
+	{Щ}{{\selectfont\char217}}1
+	{Ъ}{{\selectfont\char218}}1
+	{Ы}{{\selectfont\char219}}1
+	{Ь}{{\selectfont\char220}}1
+	{Э}{{\selectfont\char221}}1
+	{Ю}{{\selectfont\char222}}1
+	{Я}{{\selectfont\char223}}1
+	{і}{{\selectfont\char105}}1
+	{ї}{{\selectfont\char168}}1
+	{є}{{\selectfont\char185}}1
+	{ґ}{{\selectfont\char160}}1
+	{І}{{\selectfont\char73}}1
+	{Ї}{{\selectfont\char136}}1
+	{Є}{{\selectfont\char153}}1
+	{Ґ}{{\selectfont\char128}}1
+}
+
+\newcommand{\str}[1]{cтр.~\pageref{#1}}
+\newcommand{\strbook}[1]{стр.~{#1}}
+\newcommand{\tblref}[1]{табл.~\ref{#1}}
+\newcommand{\pic}[1]{рис.~\ref{#1}}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\snpr}{\sigma^\text{н}_\text{пр}}
+\newcommand{\snh}{\sigma^\text{н}_\text{кц}}
+\newcommand{\psql}{\texttt{PostgreSQL}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\const}{const}
+
+\columnseprule=0.4pt  % рисует вертикальную черту между колонками при наборе в две колонке \documentclass[twocolumn]{article}
+\newcommand{\bydef}{\stackrel{\mathrm{def}}{=}}
+% для оформления псевдокода
+\def\algorithmicrepeat{\textbf{повторять}}
+\def\algorithmicuntil{\textbf{пока}}

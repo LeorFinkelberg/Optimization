@@ -1,0 +1,44 @@
+\documentclass[%
+	11pt,
+	a4paper,
+	utf8,
+	%twocolumn
+		]{article}	
+
+\usepackage{style_packages/podvoyskiy_article_extended}
+
+
+\begin{document}
+\title{Специальные вопросы оптимизации}
+
+\author{\itshape Подвойский А.О.}
+
+\date{}
+\maketitle
+
+\thispagestyle{fancy}
+
+Здесь приводятся заметки по специальным вопросам теории оптимизации
+
+
+\shorttableofcontents{Краткое содержание}{1}
+
+\tableofcontents
+
+
+
+
+
+
+\listoffigures\addcontentsline{toc}{section}{Список иллюстраций}
+
+% Источники в "Газовой промышленности" нумеруются по мере упоминания 
+\begin{thebibliography}{99}\addcontentsline{toc}{section}{Список литературы}
+	\bibitem{lutz:learningpython-2011}{\emph{Лутц М.} Изучаем Python, 4-е издание. -- Пер. с англ. -- СПб.: Символ-Плюс, 2011. -- 1280~с. }
+	
+	\bibitem{burkov:2020}{\emph{Бурков А.} Машинное обучение без лишних слов. -- СПб.: Питер, 2020. -- 192 с.}
+		
+	\bibitem{beazley:python-2010}{\emph{Бизли Д.} Python. Подробный справочник. -- Пер. с англ. -- СПб.: Символ-Плюс, 2010. -- 864~с. }
+\end{thebibliography}
+
+\end{document}
