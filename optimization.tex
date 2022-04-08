@@ -268,6 +268,79 @@ feasibleSols(P_0) = feasibleSols(P_1) \cup feasibleSols(P_2).
 $$
 
 
+\section{Приемы работы с решателем SCIP}
+
+Полезный ресурс SCIP FAQ \url{https://www.scipopt.org/doc-8.0.0/html/FAQ.php#howtousemakefiles}
+
+\subsection{Управление процедурой поиска решения}
+
+Для того чтобы использовать стратегии \emph{ветвления} (branching) или \emph{выбора узла} (node selection) не по умолчанию, нужно задать наивысший приоритет интересующему элементу
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+SCIP> set branching <name of a branching rule> priority 9999999
+SCIP> set nodeselectors <name of a node selector> priority 9999999
+\end{lstlisting}
+
+С помощью команд \verb|display branching| и \verb|display nodeselectors| можно запросить полный список допустимых правил и селекторов, соответственно.
+
+Для того чтобы полностью отключить \emph{эвристику} или \emph{сепаратор}, следует положить частоту \verb|freq| для эвристики и \verb|sepfreq| для сепаратора равной <<-1>>
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+SCIP> set heuristics <name of a heuristic> freq -1
+SCIP> set separators <name of a separator> freq -1
+SCIP> set constraints <name of a constraint handler> sepfreq -1
+\end{lstlisting}
+
+Для отключения \emph{пресловера}, следует параметр \verb|maxrounds| положить равным 0
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+SCIP> set presolvers <name of a presolver> maxrounds 0
+\end{lstlisting}
+
+Для того чтобы нужная \emph{эвристика} применялась \underline{чаще} чем по умолчанию, следует задать более низкое значение частоты (положительное число) и/или увеличить \verb|maxlpiterquot| для глубоких эвристик (diving heuristics) и \verb|nodes| для LNS-эвристик
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+SCIP> set heuristics <name of a heuristic> freq <some value>
+SCIP> set heuristic <name of a diving heuristic> maxlpiterquot <some value>
+SCIP> set heuristic <name of a LNS heuristic> nodesquot <some value>
+\end{lstlisting}
+
+Для того чтобы нужный \emph{сепаратор} применялся \underline{чаще} чем по умолчанию, следует увеличить значение параметров \verb|maxroundsroot| и \verb|maxsepacutroot|
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+SCIP> set separators <name of a separator> maxroundsroot <some value>
+SCIP> set separators <name of a separator> maxrounds <some value>
+\end{lstlisting}
+
+Еще можно специальным образом использовать свойство симметрии бинарных переменных в MIP
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+SCIP> set misc usesymmetry 1
+SCIP> set misc usesymmetry 2
+SCIP> set misc usesymmetry 0
+\end{lstlisting}
+
+Под \emph{неявными целочисленными переменными} (impicit interger variables) понимаются переменные, которые гарантированно примут целочисленное значение в каждом оптимальном решении каждой подзадачи после фиксации всех целочисленных переменных. Если все целочисленные переменные допустимой точки (feasible point) принимают целочисленное значение, тогда либо все неявные целочисленные переменные принимают целочисленное значение, либо значение неявной целочисленной переменной может быть целочисленным без ухудшения целевой функции.
+
+Удалить столбцы из логов можно так \verb|set display memused active 0|.
+
+\remark{%
+	Массив переменных, который возвращает \texttt{SCIPgetVars()}, сортируется по \emph{типам переменных}. Порядок следующий: бинарные, цилочисленные, неявные целочисленные и, наконец, вещественные
+}
+
+
 
 \listoffigures\addcontentsline{toc}{section}{Список иллюстраций}
 
