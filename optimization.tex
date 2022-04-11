@@ -272,6 +272,29 @@ $$
 
 Полезный ресурс SCIP FAQ \url{https://www.scipopt.org/doc-8.0.0/html/FAQ.php#howtousemakefiles}
 
+Значения полей в таблице результатов (Display Columns) \url{https://www.gams.com/latest/docs/S_SCIP.html#SCIP_gr_table_conflict}
+
+\subsection{Numerical troubles}
+
+\url{https://stackoverflow.com/questions/24702747/scip-infeasibility-detection-with-a-minlp}
+
+Если возникают проблемы, связанные с вычислительной точностью, то можно попробовать снизить точность решения
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+numerics/feastol = 1e-05 # по умолчанию 1e-06
+numerics/epsilon = 1e-07 # по умолчанию 1e-09
+numerics/dualfeastol = 1e-06 # по умолчанию 1e-07
+\end{lstlisting}
+
+\subsection{Анализ конфликтов}
+
+\url{https://www.scipopt.org/doc-3.2.1/html/CONF.php}
+
+
+
+
 \subsection{Управление процедурой поиска решения}
 
 Для того чтобы использовать стратегии \emph{ветвления} (branching) или \emph{выбора узла} (node selection) не по умолчанию, нужно задать наивысший приоритет интересующему элементу
