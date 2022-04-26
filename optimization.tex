@@ -268,6 +268,16 @@ feasibleSols(P_0) = feasibleSols(P_1) \cup feasibleSols(P_2).
 $$
 
 
+\section{Presolving}
+
+\subsection{Probing}
+
+Probing это очень затратная\footnote{Поэтому она вызывается в самую последнюю очередь, когда все прочие компоненты шага снижения размерности задачи оказались не способными решить свою задачу}, но очень мощная техника препроцессинга, которая состоит в последовательной фиксации каждой бинарной переменной в ноль и единицу и вычислению соответствующих подзадач с \emph{помощью техники распространения домена} (domain propagation techniques) \cite[\strbook{154}]{achterberg:constr_int_prog}. 
+
+\section{Conflict Analysis}
+
+В алгоритмах, основанных на дереве ветвей-и-границ и решающих задачи в частично-целочисленной постановке, недопустимость подпроблемы почти всегда возникает либо по причине недопустимости релаксированного решения, либо по причине выхода релаксированного решения за первичную границу (primal bound) \cite[\strbook{171}]{achterberg:constr_int_prog}. 
+
 \section{Приемы работы с решателем SCIP}
 
 Полезный ресурс SCIP FAQ \url{https://www.scipopt.org/doc-8.0.0/html/FAQ.php#howtousemakefiles}
@@ -288,14 +298,78 @@ numerics/epsilon = 1e-07 # по умолчанию 1e-09
 numerics/dualfeastol = 1e-06 # по умолчанию 1e-07
 \end{lstlisting}
 
+\subsection{Постоение графа импликации бинарных переменных в SCIP}
+
+После решения задачи (как минимум после шага пресолвинга) в SCIP можно записать gml-файл \emph{графа импликации бинарных переменных}
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+SCIP> write cliquegraph
+\end{lstlisting}
+
+Полученный gml-файл можно прочитать с помощью библиотеки \texttt{networkx}. Обычно, при попытке прочитать <<сырой>> gml-файл, собранный с помощью SCIP,  возбуждается исключение вида
+
+\noindent<<networkx.exception.NetworkXError: edge \#36926 (3591->3590) is duplicated>>.
+
+\noindent\url{https://stackoverflow.com/questions/37931040/reading-a-multigraph-in-networkx-from-gml-file}
+
+Для того чтобы \texttt{networkx} могла корректно обработать эти ребра-<<дубли>> в gml-файл следует добавить строку <<\verb|multigraph 1|>> как показано ниже
+\begin{lstlisting}[
+style = bash,
+numbers = none	
+]
+graph
+[
+    multigraph    1  # <=== NB!
+    hierarchic     1
+    directed        1
+    node
+    [
+        id 2370
+        label "t_y..."
+        graphics
+        [
+            ...
+        ]
+    ]
+]
+\end{lstlisting}
+
+После чего \verb|networkx| будет переданный граф интерпретировать как \emph{мультиграф} и проблема задублированных ребер снимется
+
+\begin{lstlisting}[
+style = ironpython,
+numbers = none	
+]
+import networkx as nx
+
+G = nx.read_gml("./337_bin_cliquegraph.gml")
+\end{lstlisting}
+
+Однако, \verb|networkx| в случае по-настоящему больших графов может использоваться только в качестве простого инструмента локальной валидации отдельно взятых узлов и пр.
+
+Для визуализации больших сложных графов лучше подходит инструмент с открытым исходным кодом Gephi \url{https://gephi.org/users/download/}
+
+Если окно Preview в GUI Gephi не отображается, то следует выполнить инструкции \url{https://programmersought.com/article/63944156929/}
+
 \subsection{Анализ конфликтов}
 
 \url{https://www.scipopt.org/doc-3.2.1/html/CONF.php}
 
-
-
-
 \subsection{Управление процедурой поиска решения}
+
+Для визуализации дерева ветвей-и-границ необходимо получить специальные файлы (\verb*|*.vbc|, \verb|*.dat| и т.д.)
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+set visual vbcfilename somefilename.vbc
+set visual bakfilename somefilename.dat
+\end{lstlisting}
+
+{\color{red} Запись этих файлов (\verb|*.vbc|, \verb|*.dat| и т.д.) здорово просаживает производительность решения! Информацию по дереву разумеется можно собирать, но не в эксплуатационном режиме.
+}
 
 Для того чтобы использовать стратегии \emph{ветвления} (branching) или \emph{выбора узла} (node selection) не по умолчанию, нужно задать наивысший приоритет интересующему элементу
 \begin{lstlisting}[
