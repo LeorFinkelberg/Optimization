@@ -305,9 +305,87 @@ alpha_or_1_35_3_1                                          0.0
 ...
 \end{lstlisting}
 
-\remark{
-{\color{red}Если сначала прочитать \emph{частично-заданное решение}, то потом нельзя будет запустить \emph{процедуру снижения размерности задачи}!} Поэтому частично-заданное решение следует строить на предподготовленной постановке задачи (т.е. после шага \texttt{presolve})
+\remark[red]{
+	Если сначала прочитать \emph{частично-заданное решение}, то потом нельзя будет запустить \emph{процедуру снижения размерности задачи}!
 }
+
+Частично-заданное решение можно получить, например, на <<освобожденных>> целочисленных переменных (т.е. на целочисленных переменных, с которых сняты ограничения целочисленности).
+
+Другими словами в исходной постановке задачи, влключающей вещественные, целочисленные и бинарные переменные можно снять ограничение целочисленности только с целочисленных переменных (тогда в постановке задачи будут исходно-вещественные переменные, <<освобожденные>> целочисленные переменные и бинарные переменные) и искать значения вещественных и бинарных переменных.
+
+Получив решение задачи на <<освобожденных>> целочисленных переменных, в \emph{частично-заданное решение} (\verb|mst|-файл) следует включить только \emph{исходно-вещественные} и \emph{бинарные переменные} (то есть игнорируются значения <<освобожденных>> целочисленных переменных).
+
+Остается на вход решателю подать полученное частично-заданное решение и исходную постановку задачи. Пример лога
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+CIP version 7.0.3 [precision: 8 byte] [memory: block] [mode: optimized] [LP solver: SoPlex 5.0.2] [GitHash: 74c11e60cd]
+Copyright (C) 2002-2021 Konrad-Zuse-Zentrum fuer Informationstechnik Berlin (ZIB)
+
+External libraries: 
+SoPlex 5.0.2         Linear Programming Solver developed at Zuse Institute Berlin (soplex.zib.de) [GitHash: e24c304e]
+CppAD 20180000.0     Algorithmic Differentiation of C++ algorithms developed by B. Bell (www.coin-or.org/CppAD)
+ZLIB 1.2.11          General purpose compression library by J. Gailly and M. Adler (zlib.net)
+GMP 6.2.1            GNU Multiple Precision Arithmetic Library developed by T. Granlund (gmplib.org)
+ZIMPL 3.4.0          Zuse Institute Mathematical Programming Language developed by T. Koch (zimpl.zib.de)
+PaPILO 1.0.2         parallel presolve for integer and linear optimization [GitHash: e567fef]
+bliss 0.73.3p        Computing Graph Automorphism Groups by T. Junttila and P. Kaski (http://www.tcs.hut.fi/Software/bliss/)
+Ipopt 3.14.1         Interior Point Optimizer developed by A. Waechter et.al. (www.coin-or.org/Ipopt)
+
+reading user parameter file <scip.set>
+
+
+read problem <planner_bin_from_scip_337_22.03.lp>
+============
+
+original problem has 859230 variables (155 bin, 173622 int, 0 impl, 685453 cont) and 624637 constraints
+SCIP> read partial_sol_337_bin.mst
+
+read problem <partial_sol_337_bin.mst>
+============
+
+unknown variable <#> in line 1 of solution file <partial_sol_337_bin.mst>
+(further unknown variables are ignored)
+partial primal solution from solution file <partial_sol_337_bin.mst> was accepted as candidate, will be completed and checked when solving starts
+original problem has 859230 variables (155 bin, 173622 int, 0 impl, 685453 cont) and 624637 constraints
+SCIP> opt
+
+feasible solution found by completesol heuristic after 1893.7 seconds, objective value 3.785961e+10
+presolving:
+(round 1, fast)       328603 del vars, 247760 del conss, 60 add conss, 643374 chg bounds, 3585 chg sides, 595 chg coeffs, 0 upgd conss, 1 impls, 89 clqs
+(round 2, fast)       335330 del vars, 257829 del conss, 61 add conss, 872350 chg bounds, 6393 chg sides, 3237 chg coeffs, 0 upgd conss, 2 impls, 673 clqs
+(round 3, fast)       342239 del vars, 266969 del conss, 63 add conss, 885867 chg bounds, 7415 chg sides, 4227 chg coeffs, 0 upgd conss, 2 impls, 673 clqs
+(round 4, fast)       349855 del vars, 269088 del conss, 63 add conss, 886528 chg bounds, 7488 chg sides, 4227 chg coeffs, 0 upgd conss, 2 impls, 673 clqs
+(round 5, fast)       351214 del vars, 269516 del conss, 63 add conss, 886528 chg bounds, 7522 chg sides, 4227 chg coeffs, 0 upgd conss, 2 impls, 673 clqs
+(round 6, fast)       351626 del vars, 269723 del conss, 63 add conss, 886528 chg bounds, 7544 chg sides, 4227 chg coeffs, 0 upgd conss, 2 impls, 673 clqs
+(1898.6s) running MILP presolver
+(1906.0s) MILP presolver (30 rounds): 118425 aggregations, 1308 fixings, 164417 bound changes
+(round 7, medium)     471545 del vars, 269901 del conss, 63 add conss, 1050945 chg bounds, 7554 chg sides, 4227 chg coeffs, 0 upgd conss, 2 impls, 673 clqs
+(round 8, fast)       471553 del vars, 389065 del conss, 63 add conss, 1050947 chg bounds, 18250 chg sides, 4236 chg coeffs, 0 upgd conss, 2 impls, 692 clqs
+(round 9, exhaustive) 471570 del vars, 394966 del conss, 63 add conss, 1050947 chg bounds, 18263 chg sides, 4236 chg coeffs, 0 upgd conss, 2 impls, 692 clqs
+(round 10, exhaustive) 471575 del vars, 394992 del conss, 63 add conss, 1052712 chg bounds, 18263 chg sides, 4236 chg coeffs, 33381 upgd conss, 2 impls, 692 clqs
+(round 11, exhaustive) 471600 del vars, 394992 del conss, 63 add conss, 1052712 chg bounds, 18263 chg sides, 4236 chg coeffs, 34272 upgd conss, 2233 impls, 692 clqs
+(1912.6s) sparsify finished: 13/1339222 (0.0%) nonzeros canceled - in total 13 canceled nonzeros, 13 changed coefficients, 0 added nonzeros
+(1916.4s) probing: 200/12983 (1.5%) - 0 fixings, 0 aggregations, 111 implications, 2 bound changes
+(1916.4s) probing aborted: 50/50 successive totally useless probings
+(1917.4s) symmetry computation started: requiring (bin +, int -, cont +), (fixed: bin -, int +, cont -)
+(1919.8s) symmetry computation finished: 165 generators found (max: 165, log10 of symmetry group size: 82.1)
+(1919.8s) no symmetry on binary variables present.
+presolving (12 rounds: 12 fast, 5 medium, 4 exhaustive):
+473389 deleted vars, 396199 deleted constraints, 63 added constraints, 1052714 tightened bounds, 0 added holes, 18263 changed sides, 5255 changed coefficients
+2375 implications, 692 cliques
+presolved problem has 385843 variables (12896 bin, 155651 int, 23 impl, 217273 cont) and 228515 constraints
+34000 constraints of type <varbound>
+89 constraints of type <setppc>
+194426 constraints of type <linear>
+Presolving Time: 1918.03
+
+time | node  | left  |LP iter|LP it/n|mem/heur|mdpt |vars |cons |rows |cuts |sepa|confs|strbr|  dualbound   | primalbound  |  gap   | compl. 
+2540s|     1 |     0 |185787 |     - |  4198M |   0 | 385k| 228k| 228k|   0 |  0 |   0 |   0 | 2.849245e+10 | 3.785961e+10 |  32.88%| unknown
+2895s|     1 |     0 |185787 |     - |  4198M |   0 | 385k| 228k| 228k|   0 |  0 |   0 |   0 | 2.849245e+10 | 3.785961e+10 |  32.88%| unknown
+...
+\end{lstlisting}
 
 
 \subsection{Unresolved numerical troubles in LP}
