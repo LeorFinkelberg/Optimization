@@ -292,6 +292,24 @@ Probing это очень затратная\footnote{Поэтому она вы
 
 Значения полей в таблице результатов (Display Columns) \url{https://www.gams.com/latest/docs/S_SCIP.html#SCIP_gr_table_conflict}
 
+\subsection{Запуск решателя SCIP с частично-заданным решением}
+
+Частично-заданное первичное решение (partial primal solution) описывается в файле с расширением \verb|*.mst|
+\begin{lstlisting}[
+title = {\sffamily partial\_sol.mst},
+style = bash,
+numbers = none,
+]
+# MIP start
+alpha_or_1_35_3_1                                          0.0
+...
+\end{lstlisting}
+
+\remark{
+{\color{red}Если сначала прочитать \emph{частично-заданное решение}, то потом нельзя будет запустить \emph{процедуру снижения размерности задачи}!} Поэтому частично-заданное решение следует строить на предподготовленной постановке задачи (т.е. после шага \texttt{presolve})
+}
+
+
 \subsection{Unresolved numerical troubles in LP}
 
 Если верить переписке \url{https://listserv.zib.de/pipermail/scip/2015-July/002463.html}, то предупреждение типа <<(node XXXX) unresolved numerical troubles in LP XXXXX>> часто появляется в контексте задач с выской вычислительной сложностью (например, при решении задачи в релаксированной постановке MINLP) и не обязательно указывает на проблему.
