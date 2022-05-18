@@ -186,7 +186,7 @@ x_{k+1} := \argmin_{ y \in \text{int} Q } f_{t_k} (y),
 Выполнив эквивалентное преобразование задачи через надграфик, задачу \eqref{eq:lasso} можно переписать в виде гладкой условной задачи
 \begin{align*}
 	\min_{x, u} \bigg( \dfrac{1}{2} \| Ax - b\|_2^2 + \lambda \left< 1_n, u \right> \bigg) \qquad x \preceq u, \ x \succeq - u,
-\end{align*}}
+\end{align*}
 где $ x, u \in \mathbb{R}^n $ и $ 1_n := (1, \ldots, 1) \in \mathbb{R}^n $. Эта задача является задачей квадратичного программирования, и ее можно решать методом барьеров.
 
 
@@ -361,6 +361,39 @@ Strong Branching на самом деле решает LP задачу в рел
 
 Если ветвление всех задач закончено, то в множестве $ X^* $ выбирается решение (решения), которому соответствует наибольшее значение целевой функции. Оно является решением исходной задачи. Если множество $ X^* $ пустое, то исходная задача не имеет решения.
 
+\subsection{Пресолверы, пропагаторы и прайсеры}
+
+Пресолвинг предназначен для:
+\begin{itemize}
+	\item снижения размерности задачи,
+	
+	\item усиливания релаксации LP-задачи,
+	
+	\item повышения численной стабильности релаксации LP-задачи,
+	
+	\item извлечения полезной информации.
+\end{itemize}
+
+Пропагаторы предназначены для:
+\begin{itemize}
+	\item локального упрощения модели,
+	
+	\item улучшения двойственной границы,
+	
+	\item обнаружения недопустимых решений.
+\end{itemize}
+
+Прайсеры (pricing) предназначены для:
+\begin{itemize}
+	\item поиска переменных с отрицательными сниженными потерями (negative reduced costs) или доказательства отсутствия последних,
+	
+	\item динамического старения переменных,
+	
+	\item 
+\end{itemize}
+
+
+
 \subsection{Первичные эвристики в SCIP}
 
 Алгоритм ветвей-и-границ представляет собой \emph{полную} (complete) процедуру. Это означает, что алгоритм гарантирует оптимальное решение каждой проблемы за конечное время. Однако, это очень дорогой в вычислительном смысле метод и в худшем случае временные издержки будут экспоненйиально зависеть от размерности задачи.
@@ -484,6 +517,20 @@ conda install -c conda-forge soplex==5.0.2
 Значения полей в таблице результатов (Display Columns) \url{https://www.gams.com/latest/docs/S_SCIP.html#SCIP_gr_table_conflict}
 
 \subsection{Интерпретация stat-файла SCIP}
+
+
+\subsection{Наиболее важные LP-параметры}
+
+\begin{itemize}
+	\item \verb|lp/initalgorithm|, \verb|lp/resolvealgorithm|: первичный/двойственный симплекс-метод, метод барьеров с/без кроссовером,
+	
+	\item \verb|lp/pricing|,
+	
+	\item \verb|lp/threads|.
+\end{itemize}
+
+
+
 
 
 
@@ -722,7 +769,7 @@ SCIP> set heuristic <name of a LNS heuristic> nodesquot <some value>
 style = bash,
 numbers = none
 ]
-SCIP> set separators <name of a separator> maxroundsroot <some value>
+SCIP> set separating <name of a separator> maxroundsroot <some value>
 SCIP> set separators <name of a separator> maxrounds <some value>
 \end{lstlisting}
 
