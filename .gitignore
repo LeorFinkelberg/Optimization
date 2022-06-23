@@ -7,3 +7,4 @@
 *.swp
 *.lof
 .DS_Store
+*.synctex(busy)
